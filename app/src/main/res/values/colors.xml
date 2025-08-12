@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="color_login_page">#FEF1DF</color>
+    <color name="color_nav">#EAC990</color>
+    <color name="color_bg">#FFF2D0</color>
+
 </resources>

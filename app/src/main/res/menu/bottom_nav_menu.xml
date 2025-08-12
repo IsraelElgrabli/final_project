@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item
+        android:id="@+id/feedFragment"
+        android:icon="@drawable/ic_home_24"
+        android:title="Feed" />
+    <item
+        android:id="@+id/createPostFragment"
+        android:icon="@drawable/ic_add_24"
+        android:title="Create" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_person_24"
+        android:title="Profile" />
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings_24"
+        android:title="Settings" />
+</menu>

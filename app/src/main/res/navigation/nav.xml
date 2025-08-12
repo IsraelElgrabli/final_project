@@ -1,0 +1,26 @@
+<!-- res/navigation/nav.xml -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav"
+    app:startDestination="@id/feedFragment">
+
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.example.final_project.component.FeedFragment"
+        android:label="Feed" />
+
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.final_project.component.CreatePostFragment"
+        android:label="Create" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.final_project.component.ProfileFragment"
+        android:label="Profile" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.final_project.component.SettingsFragment"
+        android:label="Settings" />
+</navigation>
