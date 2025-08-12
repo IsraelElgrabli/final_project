@@ -1,32 +1,46 @@
 package com.example.final_project
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.fragment.findNavController
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.final_project.auth.SessionManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var bottomNav: BottomNavigationView
+    private lateinit var session: SessionManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // window insets (your existing code)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
-            insets
-        }
+        bottomNav = findViewById(R.id.bottom_nav)
+        session = SessionManager(this)
 
-        // nav hookup
         val navHost = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment)!!
-        val navController = navHost.findNavController()
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHost.navController
+
+        // Choose start destination based on login status
+        val inflater = navController.navInflater
+        val graph = inflater.inflate(R.navigation.nav)
+        graph.setStartDestination(
+            if (session.username == null) R.id.simpleLoginFragment else R.id.feedFragment
+        )
+        navController.graph = graph
+
+        // Hook up BottomNavigationView with NavController
         bottomNav.setupWithNavController(navController)
+
+        // Show bottom nav only on top-level destinations
+        val topLevel = setOf(
+            R.id.feedFragment, R.id.createPostFragment, R.id.profileFragment, R.id.settingsFragment
+        )
+        navController.addOnDestinationChangedListener { _, dest, _ ->
+            bottomNav.isVisible = dest.id in topLevel
+        }
     }
 }

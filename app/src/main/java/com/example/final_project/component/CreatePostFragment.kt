@@ -1,4 +1,3 @@
-// com/example/final_project/component/CreatePostFragment.kt
 package com.example.final_project.component
 
 import android.os.Bundle
@@ -7,12 +6,18 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.final_project.R
 import com.example.final_project.model.Post
 import java.util.UUID
 
 class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
 
+    private val vm: PostViewModel by activityViewModels()
+    private val authVm: AuthSimpleViewModel by activityViewModels()
+    private val userName: String
+        get() = authVm.currentUsername() ?: "admin"
     companion object {
         private const val TAG = "CreatePost"
         private const val DEFAULT_IMAGE =
@@ -28,7 +33,6 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
         val postBtn = view.findViewById<Button>(R.id.btnPost)
         val uploadBtn = view.findViewById<Button>(R.id.btnUploadPhoto)
 
-        // For now: Upload just informs we’ll use default image
         uploadBtn.setOnClickListener {
             Log.d(TAG, "Upload clicked: using default image for now -> $DEFAULT_IMAGE")
         }
@@ -47,15 +51,16 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
                 title = title,
                 description = desc,
                 imageUrl = DEFAULT_IMAGE,
-                userName = DEFAULT_USER,
+                userName = userName,
                 comments = emptyList()
             )
+            vm.addPost(post)             // ✅ persist to Room
+            Log.d(TAG, "Inserted post: $post")
 
-            // ✅ Just log it for now
-            Log.d(TAG, "Created post: $post")
-            // Later you'll push to Room/VM. For now you can also clear fields:
+            // optional UX: clear and navigate back to feed
             titleEt.text?.clear()
             descEt.text?.clear()
+            findNavController().popBackStack()
         }
     }
 }

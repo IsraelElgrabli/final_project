@@ -2,23 +2,46 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav"
-    app:startDestination="@id/feedFragment">
+    app:startDestination="@id/simpleLoginFragment">
 
+    <fragment
+        android:id="@+id/simpleLoginFragment"
+        android:name="com.example.final_project.component.SimpleLoginFragment"
+        android:label="Login">
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/simpleRegisterFragment" />
+        <action
+            android:id="@+id/action_login_to_feed"
+            app:destination="@id/feedFragment"
+            app:popUpTo="@id/simpleLoginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/simpleRegisterFragment"
+        android:name="com.example.final_project.component.SimpleRegisterFragment"
+        android:label="Register">
+        <action
+            android:id="@+id/action_register_to_feed"
+            app:destination="@id/feedFragment"
+            app:popUpTo="@id/simpleRegisterFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- BottomNav destinations -->
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.example.final_project.component.FeedFragment"
         android:label="Feed" />
-
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.example.final_project.component.CreatePostFragment"
         android:label="Create" />
-
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.final_project.component.ProfileFragment"
         android:label="Profile" />
-
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.final_project.component.SettingsFragment"
