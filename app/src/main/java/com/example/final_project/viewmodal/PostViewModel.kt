@@ -1,5 +1,4 @@
-package com.example.final_project.component
-
+package com.example.final_project.viewmodal
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -14,6 +13,9 @@ class PostViewModel(app: Application) : AndroidViewModel(app) {
 
     val feed: LiveData<List<Post>> = repo.observeFeed()
 
+    fun getPostsByUser(username: String): LiveData<List<Post>> =
+        repo.observePostsByUser(username)
+
     fun addPost(post: Post) {
         viewModelScope.launch { repo.insertPost(post) }
     }
@@ -21,7 +23,11 @@ class PostViewModel(app: Application) : AndroidViewModel(app) {
     fun deletePost(postId: String) {
         viewModelScope.launch { repo.deletePost(postId) }
     }
-
+    fun updatePost(updatedPost: Post) {
+        viewModelScope.launch {
+            repo.updatePost(updatedPost)
+        }
+    }
     override fun onCleared() {
         super.onCleared()
         repo.stop()

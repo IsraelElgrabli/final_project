@@ -6,6 +6,7 @@ import com.example.final_project.data.entity.PostEntity
 
 @Dao
 interface PostDao {
+
     @Query("SELECT * FROM posts ORDER BY rowid DESC")
     fun observePosts(): LiveData<List<PostEntity>>
 
@@ -18,6 +19,12 @@ interface PostDao {
     @Query("DELETE FROM posts WHERE id = :postId")
     suspend fun deletePost(postId: String)
 
+    @Update
+    suspend fun update(post: PostEntity) // ✅ Fixed to use PostEntity
+
     @Query("DELETE FROM posts")
     suspend fun clearPosts()
+
+    @Query("SELECT * FROM posts WHERE userName = :username ORDER BY rowid DESC")
+    fun observePostsByUser(username: String): LiveData<List<PostEntity>>
 }

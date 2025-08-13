@@ -9,7 +9,8 @@ fun Post.toEntity() = PostEntity(
     title = title,
     description = description,
     imageUrl = imageUrl,
-    userName = userName
+    userName = userName,
+    comments = comments
 )
 
 fun PostEntity.toDomain() = Post(
@@ -18,5 +19,5 @@ fun PostEntity.toDomain() = Post(
     description = description,
     imageUrl = imageUrl,
     userName = userName,
-    comments = emptyList() // not persisted yet
+    comments = comments
 )

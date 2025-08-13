@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.google.gms.google.services) // <-- from the catalog
+    alias(libs.plugins.google.gms.google.services)
+    id("androidx.navigation.safeargs.kotlin") // ✅ enable in app
+// <-- from the catalog
 }
 
 android {
@@ -50,6 +52,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("androidx.security:security-crypto:1.1.0-alpha06") // for encrypted prefs (session)
     implementation("com.google.firebase:firebase-storage-ktx")
+    implementation ("com.google.code.gson:gson:2.10.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
     // --- Lifecycle ---

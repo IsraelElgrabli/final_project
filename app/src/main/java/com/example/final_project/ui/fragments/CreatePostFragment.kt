@@ -1,4 +1,4 @@
-package com.example.final_project.component
+package com.example.final_project.ui.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -19,12 +19,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.final_project.R
+import com.example.final_project.viewmodal.AuthViewModel
 import com.example.final_project.model.Post
+import com.example.final_project.viewmodal.PostViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.storage
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -33,7 +35,7 @@ import java.util.UUID
 class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
 
     private val vm: PostViewModel by activityViewModels()
-    private val authVm: AuthSimpleViewModel by activityViewModels()
+    private val authVm: AuthViewModel by activityViewModels()
 
     private val userName: String
         get() = authVm.currentUsername() ?: "admin"
@@ -74,8 +76,11 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
             return@registerForActivityResult
         }
         selectedUri = uri
-        view?.findViewById<ImageView>(R.id.imagePreview)?.setImageURI(uri)
-        startUpload(uri) // kick off upload after sign-in
+        view?.findViewById<ImageView>(R.id.imagePreview)?.apply {
+            setImageURI(uri)
+            scaleType = ImageView.ScaleType.CENTER_CROP // fill after upload
+        }
+        startUpload(uri)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,7 +122,7 @@ class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
             )
 
             // ✅ Preload the image into Picasso cache before adding
-            com.squareup.picasso.Picasso.get().load(imageUrl).fetch(object : com.squareup.picasso.Callback {
+            Picasso.get().load(imageUrl).fetch(object : Callback {
                 override fun onSuccess() {
                     vm.addPost(post)
                     Toast.makeText(requireContext(), "Posted!", Toast.LENGTH_SHORT).show()

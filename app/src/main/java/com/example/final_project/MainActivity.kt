@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         // Show bottom nav only on top-level destinations
         val topLevel = setOf(
-            R.id.feedFragment, R.id.createPostFragment, R.id.profileFragment, R.id.settingsFragment
+            R.id.feedFragment, R.id.createPostFragment, R.id.profileFragment
         )
         navController.addOnDestinationChangedListener { _, dest, _ ->
             bottomNav.isVisible = dest.id in topLevel

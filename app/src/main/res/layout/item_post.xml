@@ -45,6 +45,8 @@
         <!-- image with small inner margins like the reference -->
         <ImageView
             android:id="@+id/imagePost"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginStart="12dp"
@@ -68,14 +70,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="2dp">
 
-            <ImageButton
-                android:id="@+id/btnEdit"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_edit_24"
-                android:contentDescription="Edit"
-                app:tint="#4A2C0A" />
+
 
             <ImageButton
                 android:id="@+id/btnDelete"
@@ -86,14 +81,7 @@
                 android:contentDescription="Delete"
                 app:tint="#4A2C0A" />
 
-            <ImageButton
-                android:id="@+id/btnComment"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_comment_outline"
-                android:contentDescription="Comment"
-                app:tint="#4A2C0A" />
+
         </LinearLayout>
 
         <!-- text content -->

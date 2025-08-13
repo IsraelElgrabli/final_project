@@ -1,7 +1,5 @@
 package com.example.final_project.data.repository
 
-
-
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
@@ -9,13 +7,12 @@ import com.example.final_project.data.AppDatabase
 import com.example.final_project.data.entity.PostEntity
 import com.example.final_project.data.mapper.toDomain
 import com.example.final_project.data.mapper.toEntity
-
+import com.example.final_project.model.Comment
 import com.example.final_project.model.Post
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
-
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,24 +34,35 @@ class PostRepository(
         return dao.observePosts().map { list -> list.map { it.toDomain() } }
     }
 
-    /** Add: write to Firestore; on success mirror to Room (instant listener will also catch it). */
+    fun observePostsByUser(username: String): LiveData<List<Post>> {
+        ensureListener()
+        return dao.observePostsByUser(username).map { list -> list.map { it.toDomain() } }
+    }
+
+    /** Add new post. */
     suspend fun insertPost(post: Post) = withContext(io) {
         postsCol.document(post.id).set(post.toFirestoreMap()).await()
         dao.insertPost(post.toEntity())
     }
 
-    /** Delete: write to Firestore; on success you can also delete locally if you expose an API. */
+    /** Update an existing post (used for adding comments, editing, etc.). */
+    suspend fun updatePost(post: Post) = withContext(io) {
+        postsCol.document(post.id).set(post.toFirestoreMap()).await()
+        dao.insertPost(post.toEntity()) // upsert into Room
+    }
+
+    /** Delete a post. */
     suspend fun deletePost(postId: String) = withContext(io) {
         try {
             postsCol.document(postId).delete().await()   // Firestore
-            dao.deletePost(postId)                       // Room (instant UI)
+            dao.deletePost(postId)                       // Room
         } catch (e: Exception) {
-            // optional: Log and rethrow so ViewModel can show a toast/snackbar
             android.util.Log.e("PostRepository", "delete failed for $postId", e)
             throw e
         }
     }
-    /** Real-time listener → maps docs → upserts into Room. */
+
+    /** Start Firestore listener that mirrors into Room. */
     private fun ensureListener() {
         if (listener != null) return
         listener = postsCol
@@ -80,6 +88,7 @@ private fun Post.toFirestoreMap() = mapOf(
     "description" to description,
     "imageUrl" to imageUrl,
     "userName" to userName,
+    "comments" to comments.map { mapOf("userName" to it.userName, "text" to it.text) },
     "createdAt" to Timestamp.now()
 )
 
@@ -90,5 +99,10 @@ private fun com.google.firebase.firestore.DocumentSnapshot.toPostEntityOrNull():
     val description = data["description"] as? String ?: ""
     val imageUrl = data["imageUrl"] as? String ?: ""
     val userName = data["userName"] as? String ?: "admin"
-    return PostEntity(id, title, description, imageUrl, userName)
+
+    val commentsList = (data["comments"] as? List<Map<String, String>>)
+        ?.map { Comment(it["userName"] ?: "anon", it["text"] ?: "") }
+        ?: emptyList()
+
+    return PostEntity(id, title, description, imageUrl, userName, commentsList)
 }

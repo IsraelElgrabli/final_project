@@ -1,7 +1,9 @@
+// com/example/final_project/data/entity/PostEntity.kt
 package com.example.final_project.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.final_project.model.Comment
 
 @Entity(tableName = "posts")
 data class PostEntity(
@@ -9,6 +11,6 @@ data class PostEntity(
     val title: String,
     val description: String,
     val imageUrl: String,
-    val userName: String
-    // comments NOT stored yet; will be added later in a separate table
+    val userName: String,
+    val comments: List<Comment> = emptyList()
 )

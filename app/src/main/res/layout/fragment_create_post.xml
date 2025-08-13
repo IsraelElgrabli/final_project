@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FAF4E3"
     android:padding="16dp">
 
@@ -17,7 +17,7 @@
             android:id="@+id/imagePreview"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             android:contentDescription="Image preview"
             android:background="#EBC48B"
             android:src="@drawable/ic_camera_outline"
@@ -29,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- Your existing content -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,8 +46,6 @@
                 android:visibility="gone" />
         </FrameLayout>
 
-
-
         <!-- Upload photo button -->
         <Button
             android:id="@+id/btnUploadPhoto"
@@ -57,9 +54,9 @@
             android:text="Upload photo"
             android:textColor="#4A2C0A"
             android:textStyle="bold"
-            app:backgroundTint="@null"
             android:background="@drawable/rounded_light_button"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            app:backgroundTint="@null" />
 
         <!-- Title input -->
         <EditText
@@ -67,9 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="title"
-
             android:textColor="#A57B4D"
-
             android:textColorHint="#A57B4D"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
@@ -77,8 +72,6 @@
             android:layout_marginBottom="12dp" />
 
         <!-- Description input -->
-
-        <!-- Post button -->
         <EditText
             android:id="@+id/editDescription"
             android:layout_width="match_parent"
@@ -91,6 +84,7 @@
             android:textColor="#A57B4D"
             android:textColorHint="#A57B4D" />
 
+        <!-- Post button -->
         <Button
             android:id="@+id/btnPost"
             android:layout_width="match_parent"
@@ -98,8 +92,8 @@
             android:text="POST"
             android:textStyle="bold"
             android:textColor="#4A2C0A"
-            app:backgroundTint="@null"
-            android:background="@drawable/rounded_post_button" />
+            android:background="@drawable/rounded_post_button"
+            app:backgroundTint="@null" />
 
     </LinearLayout>
 </ScrollView>

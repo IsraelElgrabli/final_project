@@ -1,4 +1,4 @@
-package com.example.final_project.component
+package com.example.final_project.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 
 class PostAdapter(
     private val items: List<Post>,
-    private val currentUsername: String?,               // <— pass logged-in username
+    private val currentUsername: String?,
     private val onClick: (Post) -> Unit = {},
     private val onEdit: (Post) -> Unit = {},
     private val onDelete: (Post) -> Unit = {}
@@ -28,12 +28,11 @@ class PostAdapter(
         private val comments: TextView = itemView.findViewById(R.id.textComments)
 
         private val ownerActions: View = itemView.findViewById(R.id.ownerActions)
-        private val btnEdit: ImageButton = itemView.findViewById(R.id.btnEdit)
         private val btnDelete: ImageButton = itemView.findViewById(R.id.btnDelete)
 
         fun bind(post: Post) {
             title.text = post.title
-            user.text = "@${post.userName}"
+            user.text = post.userName
             desc.text = post.description
             comments.text = "${post.comments.size} comments"
 
@@ -51,10 +50,13 @@ class PostAdapter(
             val mine = post.userName.equals(currentUsername, ignoreCase = true)
             ownerActions.isVisible = mine
 
-            btnEdit.setOnClickListener { onEdit(post) }
             btnDelete.setOnClickListener { onDelete(post) }
 
-            itemView.setOnClickListener { onClick(post) }
+            // 🔹 Image opens PostDetail
+            image.setOnClickListener { onClick(post) }
+
+            // (Optional) remove whole-card click to avoid double triggers
+            itemView.setOnClickListener(null)
         }
     }
 

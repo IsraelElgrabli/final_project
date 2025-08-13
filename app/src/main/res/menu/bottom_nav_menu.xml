@@ -12,8 +12,5 @@
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_person_24"
         android:title="" />
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings_24"
-        android:title="" />
+
 </menu>

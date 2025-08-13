@@ -9,7 +9,7 @@ import com.google.firebase.firestore.firestore
 
 import kotlinx.coroutines.tasks.await
 
-class AuthSimpleRepository(context: Context) {
+class AuthRepository(context: Context) {
     private val db = Firebase.firestore
     private val users = db.collection("users")
     private val session = SessionManager(context)
