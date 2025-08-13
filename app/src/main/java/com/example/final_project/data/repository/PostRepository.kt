@@ -45,11 +45,15 @@ class PostRepository(
 
     /** Delete: write to Firestore; on success you can also delete locally if you expose an API. */
     suspend fun deletePost(postId: String) = withContext(io) {
-        postsCol.document(postId).delete().await()
-        // Optional: also remove locally if you added a DAO delete:
-        // dao.deletePost(postId)
+        try {
+            postsCol.document(postId).delete().await()   // Firestore
+            dao.deletePost(postId)                       // Room (instant UI)
+        } catch (e: Exception) {
+            // optional: Log and rethrow so ViewModel can show a toast/snackbar
+            android.util.Log.e("PostRepository", "delete failed for $postId", e)
+            throw e
+        }
     }
-
     /** Real-time listener → maps docs → upserts into Room. */
     private fun ensureListener() {
         if (listener != null) return

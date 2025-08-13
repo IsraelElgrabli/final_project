@@ -13,24 +13,44 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
 
     private val vm: PostViewModel by activityViewModels()
     private lateinit var adapter: PostAdapter
+    private val authVm: AuthSimpleViewModel by activityViewModels()
+
+    private val userName: String
+        get() = authVm.currentUsername() ?: "admin"
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerFeed)
         val lm = LinearLayoutManager(requireContext())
+
+
+
         recycler.layoutManager = lm
-        adapter = PostAdapter(emptyList())   // start empty
-        recycler.adapter = adapter
+        adapter = PostAdapter(
+            items = emptyList(),
+            currentUsername = userName,
+            onClick = { post -> /* open details */ },
+            onEdit = { post -> /* edit */ },
+            onDelete = { post ->
+                vm.deletePost(post.id) // ViewModel → Repository → Firestore + Room
+            }
+        )
+        recycler.adapter = adapter  // start empty
         recycler.addItemDecoration(DividerItemDecoration(requireContext(), lm.orientation))
 
         // Observe Room via ViewModel -> update UI
         vm.feed.observe(viewLifecycleOwner) { posts ->
-            // If your PostAdapter is a simple adapter that takes a list in ctor:
-            recycler.adapter = PostAdapter(posts)
-
-            // If you converted to ListAdapter, use:
-            // adapter.submitList(posts)
+            recycler.adapter = PostAdapter(
+                items = posts,
+                currentUsername = userName,
+                onClick = { /* ... */ },
+                onEdit = { /* ... */ },
+                onDelete = { post ->
+                    vm.deletePost(post.id)
+                }
+            )
         }
     }
 }

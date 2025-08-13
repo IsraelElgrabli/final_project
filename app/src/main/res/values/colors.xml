@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_login_page">#FEF1DF</color>
     <color name="color_nav">#EAC990</color>
-    <color name="color_bg">#FFF2D0</color>
+    <color name="login_register_btn">#e1a345</color>
 
+    <color name="color_bg">#FFF2D0</color>
 </resources>

@@ -6,4 +6,15 @@
     </style>
 
     <style name="Theme.Final_project" parent="Base.Theme.Final_project" />
+
+    <style name="Theme.MyApp" parent="Theme.Material3.Light.NoActionBar">
+        <!-- other theme settings -->
+
+        <!-- Remove Material's default button tint -->
+        <item name="materialButtonStyle">@style/MyButtonStyle</item>
+    </style>
+
+    <style name="MyButtonStyle" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@null</item>
+    </style>
 </resources>

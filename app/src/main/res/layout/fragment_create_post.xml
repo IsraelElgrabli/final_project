@@ -1,52 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/color_bg"
-
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FAF4E3"
+    android:padding="16dp">
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <!-- Image preview box (placeholder for now) -->
+        <!-- Image preview box -->
         <ImageView
             android:id="@+id/imagePreview"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="#EFD9B5"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerInside"
-            android:src="@android:drawable/ic_menu_camera" />
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Image preview"
+            android:background="#EBC48B"
+            android:src="@drawable/ic_camera_outline"
+            android:padding="24dp"
+            android:layout_marginBottom="12dp"
+            android:adjustViewBounds="true" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Your existing content -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- Existing UI here -->
+            </LinearLayout>
+
+            <!-- Spinner overlay -->
+            <ProgressBar
+                android:id="@+id/uploadSpinner"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
+
+        <!-- Upload photo button -->
         <Button
             android:id="@+id/btnUploadPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:text="Upload photo"
-            android:layout_marginTop="12dp" />
+            android:textColor="#4A2C0A"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            android:background="@drawable/rounded_light_button"
+            android:layout_marginBottom="16dp" />
 
+        <!-- Title input -->
         <EditText
             android:id="@+id/editTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="title"
-            android:layout_marginTop="12dp" />
 
+            android:textColor="#A57B4D"
+
+            android:textColorHint="#A57B4D"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:background="@drawable/rounded_edit_outline"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Description input -->
+
+        <!-- Post button -->
         <EditText
             android:id="@+id/editDescription"
             android:layout_width="match_parent"
             android:layout_height="140dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_edit_outline"
+            android:gravity="top|start"
             android:hint="Add description"
-            android:gravity="top"
-            android:layout_marginTop="12dp" />
+            android:padding="12dp"
+            android:textColor="#A57B4D"
+            android:textColorHint="#A57B4D" />
 
         <Button
             android:id="@+id/btnPost"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:text="POST"
-            android:layout_marginTop="16dp" />
+            android:textStyle="bold"
+            android:textColor="#4A2C0A"
+            app:backgroundTint="@null"
+            android:background="@drawable/rounded_post_button" />
+
     </LinearLayout>
 </ScrollView>

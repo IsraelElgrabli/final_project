@@ -3,17 +3,21 @@ package com.example.final_project.component
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.final_project.R
 import com.example.final_project.model.Post
 import com.squareup.picasso.Picasso
-import com.example.final_project.R
-
 
 class PostAdapter(
     private val items: List<Post>,
-    private val onClick: (Post) -> Unit = {}
+    private val currentUsername: String?,               // <— pass logged-in username
+    private val onClick: (Post) -> Unit = {},
+    private val onEdit: (Post) -> Unit = {},
+    private val onDelete: (Post) -> Unit = {}
 ) : RecyclerView.Adapter<PostAdapter.PostVH>() {
 
     inner class PostVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -22,6 +26,10 @@ class PostAdapter(
         private val user: TextView = itemView.findViewById(R.id.textUser)
         private val desc: TextView = itemView.findViewById(R.id.textDescription)
         private val comments: TextView = itemView.findViewById(R.id.textComments)
+
+        private val ownerActions: View = itemView.findViewById(R.id.ownerActions)
+        private val btnEdit: ImageButton = itemView.findViewById(R.id.btnEdit)
+        private val btnDelete: ImageButton = itemView.findViewById(R.id.btnDelete)
 
         fun bind(post: Post) {
             title.text = post.title
@@ -32,12 +40,19 @@ class PostAdapter(
             if (post.imageUrl.isNotBlank()) {
                 Picasso.get()
                     .load(post.imageUrl)
-                    .placeholder(R.drawable.ic_image_placeholder) // add a simple drawable
+                    .placeholder(R.drawable.ic_image_placeholder)
                     .error(R.drawable.ic_image_placeholder)
                     .into(image)
             } else {
                 image.setImageResource(R.drawable.ic_image_placeholder)
             }
+
+            // Show actions only for the owner
+            val mine = post.userName.equals(currentUsername, ignoreCase = true)
+            ownerActions.isVisible = mine
+
+            btnEdit.setOnClickListener { onEdit(post) }
+            btnDelete.setOnClickListener { onDelete(post) }
 
             itemView.setOnClickListener { onClick(post) }
         }

@@ -1,67 +1,143 @@
-<?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardUseCompatPadding="true"
-    app:strokeColor="?attr/colorOutline"
-    app:strokeWidth="1dp">
+    app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    android:backgroundTint="#FAF4E3">
 
     <LinearLayout
+        android:layoutDirection="ltr"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- username row (left) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp"
+            android:gravity="center_vertical">
+
+            <View
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/profile_placeholder"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/textUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@username"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="#4A2C0A" />
+        </LinearLayout>
+
+        <!-- image with small inner margins like the reference -->
         <ImageView
             android:id="@+id/imagePost"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="6dp"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"
+            android:background="@drawable/image_placeholder_bg" />
 
+        <!-- icons row aligned with the image/title (right side) -->
+        <LinearLayout
+            android:layoutDirection="ltr"
+
+            android:id="@+id/ownerActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="2dp">
+
+            <ImageButton
+                android:id="@+id/btnEdit"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_edit_24"
+                android:contentDescription="Edit"
+                app:tint="#4A2C0A" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_delete_24"
+                android:contentDescription="Delete"
+                app:tint="#4A2C0A" />
+
+            <ImageButton
+                android:id="@+id/btnComment"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_comment_outline"
+                android:contentDescription="Comment"
+                app:tint="#4A2C0A" />
+        </LinearLayout>
+
+        <!-- text content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/textTitle"
-                style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Post title"
-                android:maxLines="1"
-                android:ellipsize="end" />
-
-            <TextView
-                android:id="@+id/textUser"
-                style="@style/TextAppearance.Material3.BodySmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@username"
-                android:alpha="0.75"
-                android:paddingTop="2dp" />
+                android:text="Timna Park"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#4A2C0A" />
 
             <TextView
                 android:id="@+id/textDescription"
-                style="@style/TextAppearance.Material3.BodyMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
-                android:maxLines="3"
+                android:layout_marginTop="4dp"
+                android:text="In the Arava, Timna Park showcases stunning desert scenery..."
+                android:textSize="14sp"
+                android:lineSpacingExtra="2dp"
+                android:textColor="#5C3C18"
+                android:maxLength="80"
                 android:ellipsize="end"
-                android:paddingTop="8dp" />
+                android:singleLine="false"
+                android:scrollHorizontally="false" />
 
+            <!-- comments LAST at the bottom -->
             <TextView
                 android:id="@+id/textComments"
-                style="@style/TextAppearance.Material3.LabelSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 comments"
-                android:paddingTop="8dp" />
+                android:textSize="12sp"
+                android:textColor="#8B6C42"
+                android:layout_marginTop="10dp" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
